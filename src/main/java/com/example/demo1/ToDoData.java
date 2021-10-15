@@ -18,7 +18,7 @@ import java.util.List;
 
 public class ToDoData {
 
-    private static ToDoData instance;
+    private static ToDoData instance = new ToDoData();
     private static String filename = "TodoListItens.txt";
     private List<ToDoItem> todoItens;
     private DateTimeFormatter formatter;
@@ -56,6 +56,8 @@ public class ToDoData {
             Iterator<ToDoItem> iter = todoItens.iterator();
             while(iter.hasNext()){
                 ToDoItem item = iter.next();
+                bw.write(String.format("%s\t%s\t%s",item.getShortDescription(),item.getDetails(),item.getDeadline().format(formatter)));
+                bw.newLine();
             }
         }finally {
             if(bw != null){
@@ -65,11 +67,16 @@ public class ToDoData {
     }
 
 
+
+    public void addTodoItem(ToDoItem item){
+        todoItens.add(item);
+    }
+
     public static ToDoData getInstance() {
         return instance;
     }
 
-    private ToDoData() throws IOException {
+    private ToDoData()   {
         formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     }
 

@@ -25,4 +25,22 @@ public class HelloApplication extends Application {
     public static void main(String[] args) {
         launch();
     }
+
+    @Override
+    public void stop() throws Exception {
+        try{
+            ToDoData.getInstance().storeToDoItens();
+        }catch(IOException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void init() throws Exception {
+        try{
+            ToDoData.getInstance().loadToDoItens();
+        }catch(IOException e){
+            System.out.println(e.getMessage());
+        }
+    }
 }
